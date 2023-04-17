@@ -1,5 +1,4 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { Configuration, OpenAIApi } from "openai";
 
 const configuration = new Configuration({
@@ -8,7 +7,7 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
-export async function GET(req: NextApiRequest) {
+export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const userInput = searchParams.get("userInput");
   if (!userInput) {

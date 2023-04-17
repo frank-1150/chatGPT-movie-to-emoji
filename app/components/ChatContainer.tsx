@@ -12,15 +12,7 @@ const ChatContainer = () => {
     { message: "This is chatgpt", sender: "sever" },
   ]);
   const { data, isLoading, error } = useChatgpt(message);
-  console.log(
-    "chat container",
-    "msg:",
-    message,
-    "data:",
-    data,
-    isLoading,
-    error
-  );
+
   // update the history message with the data from the useChatgpt hook
   useEffect(() => {
     if (data) {
