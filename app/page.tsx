@@ -15,7 +15,8 @@ export default function Home() {
           <ChatContainer />
         </div>
       </div>
-      <Analytics />
+      {/* <Analytics /> */}
+      {/* Analytics is a React component, would break when running at local*/}
     </main>
   );
 }
