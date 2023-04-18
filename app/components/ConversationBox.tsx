@@ -1,7 +1,9 @@
 import { ReactElement, JSXElementConstructor, ReactFragment } from "react";
 
 // Build a component that will display the conversation box
-const ConversationBox = (props) => {
+const ConversationBox = (props: {
+  data: { message: string; sender: string }[];
+}) => {
   const messageList = props.data;
   return (
     <>
@@ -10,14 +12,7 @@ const ConversationBox = (props) => {
           (
             message: {
               sender: string;
-              message:
-                | string
-                | number
-                | boolean
-                | ReactElement<any, string | JSXElementConstructor<any>>
-                | ReactFragment
-                | null
-                | undefined;
+              message: string;
             },
             index
           ) => {

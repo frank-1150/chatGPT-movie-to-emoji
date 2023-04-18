@@ -8,7 +8,7 @@ type ChatgptResponse = {
 
 export const useChatgpt = (userInput: string) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<Error | null>(null);
   const [data, setData] = useState<ChatgptResponse | null>(null);
   useEffect(() => {
     const fetchChatgpt = async (userInput: string) => {
@@ -20,7 +20,7 @@ export const useChatgpt = (userInput: string) => {
         const response = await fetch(`/api/chatgpt?userInput=${userInput}`);
         const data = await response.json();
         setData(data);
-      } catch (error) {
+      } catch (error: any | NextResponse) {
         setError(error);
       }
 
