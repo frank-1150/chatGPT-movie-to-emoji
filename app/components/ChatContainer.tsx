@@ -16,14 +16,14 @@ const ChatContainer = () => {
   // update the history message with the data from the useChatgpt hook
   useEffect(() => {
     if (data) {
-      if (data.hasOwnProperty("error")) {
+      if (data.error) {
         // display the error message
         setHistoryMessage([
           ...historyMessage,
           { message: data.error.message, sender: "server" },
         ]);
         return;
-      } else {
+      } else if (data.response) {
         console.log("display the message", data);
         setHistoryMessage([
           ...historyMessage,
