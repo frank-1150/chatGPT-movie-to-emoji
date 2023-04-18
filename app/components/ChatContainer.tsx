@@ -9,7 +9,7 @@ const ChatContainer = () => {
   const [message, setMessage] = useState("");
   const [historyMessage, setHistoryMessage] = useState([
     { message: "hi", sender: "user" },
-    { message: "This is chatgpt", sender: "sever" },
+    { message: "This is chatgpt", sender: "server" },
   ]);
   const { data, isLoading, error } = useChatgpt(message);
 
