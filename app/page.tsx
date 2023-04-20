@@ -3,19 +3,16 @@ import { Inter } from "next/font/google";
 import styles from "./page.module.css";
 import ChatContainer from "./components/ChatContainer";
 import { Analytics } from "@vercel/analytics/react";
+import HomeScreen from "./components/HomeScreen";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   return (
-    <main className={styles.main}>
-      <div className="container mx-auto my-auto p-4 min-w-full">
-        <h2 className="text-4xl text-center">AI: movie to emoji😃🤩🤗🤣</h2>
-        <div className="bg-slate-200 rounded-3xl shadow-2xl mx-auto max-w-3xl">
-          <ChatContainer />
-        </div>
-      </div>
+    <div className="flex flex-row h-screen max-w-full flex-1">
+      <HomeScreen />
       <Analytics />
-    </main>
+      {/* Analytics is a React component, would break when running at local*/}
+    </div>
   );
 }
