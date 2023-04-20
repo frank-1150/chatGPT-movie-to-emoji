@@ -1,6 +1,10 @@
 import React from "react";
 
-const Navbar = ({ handleSidebarToggle }) => {
+interface Props {
+  handleSidebarToggle: () => void;
+}
+
+const Navbar: React.FC<Props> = ({ handleSidebarToggle }) => {
   return (
     <>
       <div className="lg:hidden flex flex-1 fixed top-0 p-2 border-b-2 border-gray-500 bg-gray-200 text-gray-700 z-10 w-full">

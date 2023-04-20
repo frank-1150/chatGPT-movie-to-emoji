@@ -2,7 +2,11 @@
 import React from "react";
 import { useState } from "react";
 
-const Sidebar = ({ handleSidebarToggle }) => {
+interface Props {
+  handleSidebarToggle: () => void;
+}
+
+const Sidebar: React.FC<Props> = ({ handleSidebarToggle }) => {
   // allow users to select a conversation or create a new one
   const [conversations, setConversations] = useState([
     "conversation 1",
@@ -13,7 +17,7 @@ const Sidebar = ({ handleSidebarToggle }) => {
     conversations[0]
   );
 
-  const handleConversationClick = (conversation) => {
+  const handleConversationClick = (conversation: string) => {
     setSelectedConversation(conversation);
   };
 
