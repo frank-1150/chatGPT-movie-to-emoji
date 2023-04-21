@@ -2,44 +2,63 @@
 import React from "react";
 import { useState } from "react";
 
-interface Props {
-  handleSidebarToggle: () => void;
-}
+type Conversation = {
+  conId: number;
+  data: Array<{ message: string; sender: string }>;
+};
 
-const Sidebar: React.FC<Props> = ({ handleSidebarToggle }) => {
-  // allow users to select a conversation or create a new one
-  const [conversations, setConversations] = useState([
-    "conversation 1",
-    "conversation 2",
-    "conversation 3",
-  ]);
-  const [selectedConversation, setSelectedConversation] = useState(
-    conversations[0]
-  );
+type SidebarProps = {
+  conversations: Conversation[];
+  setConversations: React.Dispatch<React.SetStateAction<Conversation[]>>;
+  selectedConversationId: number;
+  setselectedConversationId: React.Dispatch<React.SetStateAction<number>>;
+};
 
-  const handleConversationClick = (conversation: string) => {
-    setSelectedConversation(conversation);
+const Sidebar: React.FC<SidebarProps> = ({
+  conversations,
+  setConversations,
+  selectedConversationId,
+  setselectedConversationId,
+}) => {
+  const handleConversationClick = (conversationId: number) => {
+    setselectedConversationId(conversationId);
   };
 
   return (
     <div className="p-4 bg-gray-200 w-full min-w-max">
-      <div className="container flex">
+      <div className="container flex flex-col">
         <h2 className="p-4 text-2xl text-center tex font-bold mb-2">
           Conversations
         </h2>
+        <button
+          className="bg-blue-500 text-white font-bold py-2 px-4 rounded mb-4"
+          onClick={() => {
+            // create a new conversation object with a unique ID
+            const newConversation = {
+              conId: conversations.length + 1,
+              data: [],
+            };
+            // add the new conversation to the conversations array
+            setConversations([...conversations, newConversation]);
+            // select the newly created conversation
+            setselectedConversationId(newConversation.conId);
+          }}
+        >
+          New Conversation
+        </button>
       </div>
       <ul>
-        {conversations.map((conversation) => (
+        {conversations.map((conversation: Conversation) => (
           <li
-            key={conversation}
+            key={conversation.conId}
             className={`cursor-pointer p-2 mb-2 rounded-md ${
-              selectedConversation === conversation
+              selectedConversationId === conversation.conId
                 ? "bg-blue-400 text-white"
                 : ""
             }`}
-            onClick={() => handleConversationClick(conversation)}
+            onClick={() => handleConversationClick(conversation.conId)}
           >
-            {conversation}
+            Conversation {conversation.conId}
           </li>
         ))}
       </ul>

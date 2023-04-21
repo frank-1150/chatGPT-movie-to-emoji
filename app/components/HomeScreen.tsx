@@ -5,8 +5,33 @@ import ChatContainer from "./ChatContainer";
 import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
 import React from "react";
-
+type Conversation = {
+  conId: number;
+  data: {
+    message: string;
+    sender: string;
+  }[];
+};
 const HomeScreen = () => {
+  const [conversations, setConversations] = useState([
+    {
+      conId: 1,
+      data: [
+        { message: "hi", sender: "user" },
+        { message: "This is chatgpt", sender: "server" },
+      ],
+    },
+    {
+      conId: 2,
+      data: [
+        { message: "hi", sender: "user" },
+        { message: "This is chatgpt", sender: "server" },
+      ],
+    },
+  ]);
+  const [selectedConversationId, setselectedConversationId] = useState(
+    conversations[0].conId
+  );
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleSidebarToggle = () => {
@@ -16,13 +41,22 @@ const HomeScreen = () => {
     <>
       <Navbar handleSidebarToggle={handleSidebarToggle} />
       <div className="lg:w-1/5 lg:min-w-max bg-gray-200 hidden lg:block">
-        <Sidebar handleSidebarToggle={handleSidebarToggle} />
+        <Sidebar
+          conversations={conversations}
+          setConversations={setConversations}
+          selectedConversationId={selectedConversationId}
+          setselectedConversationId={setselectedConversationId}
+        />
       </div>
 
       <div className="container mx-auto my-auto p-4">
         <h2 className="text-4xl text-center">AI: movie to emoji😃🤩🤗🤣</h2>
         <div className="bg-slate-200 rounded-3xl shadow-2xl mx-auto max-w-3xl">
-          <ChatContainer />
+          <ChatContainer
+            setConversations={setConversations}
+            selectedConversationId={selectedConversationId}
+            conversations={conversations}
+          />
         </div>
       </div>
 
@@ -33,7 +67,12 @@ const HomeScreen = () => {
         style={{ left: sidebarOpen ? 0 : "-100%" }}
       >
         <div className="bg-gray-200 h-full flex flex-row">
-          <Sidebar handleSidebarToggle={handleSidebarToggle} />
+          <Sidebar
+            conversations={conversations}
+            setConversations={setConversations}
+            selectedConversationId={selectedConversationId}
+            setselectedConversationId={setselectedConversationId}
+          />
         </div>
       </div>
       {sidebarOpen && (

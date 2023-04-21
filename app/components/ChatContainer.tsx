@@ -3,14 +3,33 @@ import { TextField, Button } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import ConversationBox from "./ConversationBox";
 import { useChatgpt } from "../hooks/useChatGPT";
+interface Props {
+  conversations: {
+    conId: number;
+    data: { message: string; sender: string }[];
+  }[];
+  setConversations: React.Dispatch<React.SetStateAction<Conversation[]>>;
+  selectedConversationId: number;
+}
+type Conversation = {
+  conId: number;
+  data: Array<{ message: string; sender: string }>;
+};
 
-const ChatContainer = () => {
+const ChatContainer: React.FC<Props> = ({
+  conversations,
+  setConversations,
+  selectedConversationId,
+}) => {
+  const selectedConversation = conversations.find(
+    (con: Conversation) => con.conId === selectedConversationId
+  );
   const [pendingMessage, setPendingMessage] = useState("");
   const [message, setMessage] = useState("");
-  const [historyMessage, setHistoryMessage] = useState([
-    { message: "hi", sender: "user" },
-    { message: "This is chatgpt", sender: "server" },
-  ]);
+  const [historyMessage, setHistoryMessage] = useState(
+    selectedConversation ? selectedConversation.data : []
+  );
+
   const { data, isLoading, error } = useChatgpt(message);
 
   // update the history message with the data from the useChatgpt hook
@@ -32,6 +51,27 @@ const ChatContainer = () => {
       }
     }
   }, [data]);
+
+  // set selected conversation when conversations change
+  useEffect(() => {
+    const selectedConversation = conversations.find(
+      (con: Conversation) => con.conId === selectedConversationId
+    );
+    if (selectedConversation) {
+      setHistoryMessage(selectedConversation.data);
+    }
+  }, [conversations, selectedConversationId]);
+
+  // update conversation history when history message changes
+  useEffect(() => {
+    const newConversations = conversations.map((con: Conversation) => {
+      if (con.conId === selectedConversationId) {
+        return { ...con, data: historyMessage };
+      }
+      return con;
+    });
+    setConversations(newConversations);
+  }, [historyMessage]);
 
   const handleFormSubmit = () => {
     if (pendingMessage === "") {
@@ -59,6 +99,7 @@ const ChatContainer = () => {
     setPendingMessage("");
     // fetch the response from the server using the message and hook
   };
+
   return (
     <>
       <div className="container flex justify-center overflow-y-auto">
