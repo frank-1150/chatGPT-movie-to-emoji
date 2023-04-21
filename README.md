@@ -1,6 +1,9 @@
 This is a [Next.js](https://nextjs.org/) project using the Open AI API, tailwind CSS is also used.
 
 The home page looks like this:
+New version: 
+![image](https://user-images.githubusercontent.com/76094159/233572696-051e81bc-2404-4117-82bb-403feee1c3ab.png)
+The first version chatbox looks like this:
 ![image](https://user-images.githubusercontent.com/76094159/232632138-0f9164d8-41fa-45a4-8097-b5bbf65dc035.png)
 
 Already optimized for mobile usage.
